@@ -1,11 +1,15 @@
 package org.acme.services;
 
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.SetOptions;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import lombok.SneakyThrows;
-import org.acme.models.*;
+import org.acme.models.User;
+import org.acme.models.UserInput;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +37,6 @@ public class UserRepository {
         User user = User.builder()
                 .name(userInput.getName())
                 .age(userInput.getAge())
-                .profession(userInput.getProfession().toString())
                 .build();
         var future = userCollection.add(user);
         return future.get().getId();
@@ -57,11 +60,6 @@ public class UserRepository {
     public void updateUserAge(String id, int age) {
         assertUserExists(id);
         userCollection.document(id).set(new HashMap<>(Map.of("age", age)), SetOptions.merge());
-    }
-
-    public void updateUserProfession(String id, Profession profession) {
-        assertUserExists(id);
-        userCollection.document(id).set(new HashMap<>(Map.of("profession", profession.toString())), SetOptions.merge());
     }
 
     public DocumentSnapshot assertUserExists(String id) {

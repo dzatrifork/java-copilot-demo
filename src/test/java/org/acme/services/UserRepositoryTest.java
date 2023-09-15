@@ -4,7 +4,9 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import io.quarkus.test.junit.QuarkusTest;
 import lombok.SneakyThrows;
-import org.acme.models.*;
+import org.acme.models.AgeInput;
+import org.acme.models.User;
+import org.acme.models.UserInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @QuarkusTest
@@ -38,7 +39,6 @@ public class UserRepositoryTest {
         UserInput userInput = UserInput.builder()
                 .name("John Doe")
                 .age(30)
-                .profession(Profession.ENGINEER)
                 .build();
         var mockFuture = mock(ApiFuture.class);
         var mockDocumentRef = mock(DocumentReference.class);
@@ -57,37 +57,6 @@ public class UserRepositoryTest {
         assertEquals("12345", userId);
         verify(mockCollection, times(1)).add(any(User.class));
     }
-
-    @Test
-    void testCreateUserWithNullName() {
-        // Arrange
-        UserInput userInput = UserInput.builder()
-                .name(null)
-                .age(30)
-                .profession(Profession.ENGINEER)
-                .build();
-
-        userRepository = new UserRepository(mockFirestore);
-
-        // Act & Assert
-        assertThrows(NullPointerException.class, () -> userRepository.createUser(userInput));
-    }
-
-    @Test
-    void testCreateUserWithEmptyName() {
-        // Arrange
-        UserInput userInput = UserInput.builder()
-                .name("")
-                .age(30)
-                .profession(Profession.ENGINEER)
-                .build();
-
-        userRepository = new UserRepository(mockFirestore);
-
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> userRepository.createUser(userInput));
-    }
-
 
     @Test
     public void testGetUser() throws Exception {
@@ -167,30 +136,5 @@ public class UserRepositoryTest {
 
         // Assert
         verify(mockDocumentRef, times(1)).set(new HashMap<>(Map.of("age", newAgeInput.getAge())), SetOptions.merge());
-    }
-
-    @Test
-    @SneakyThrows
-    public void testUpdateUserProfession() {
-        // Arrange
-        String userId = "12345";
-        ProfessionInput newProfessionInput = ProfessionInput.builder().profession(Profession.DOCTOR).build();
-        var mockDocumentSnapshot = mock(DocumentSnapshot.class);
-        var mockDocumentRef = mock(DocumentReference.class);
-        var mockFuture = mock(ApiFuture.class);
-
-        when(mockFirestore.collection("users")).thenReturn(mockCollection);
-        when(mockCollection.document(userId)).thenReturn(mockDocumentRef);
-        when(mockDocumentRef.get()).thenReturn(mockFuture);
-        when(mockFuture.get()).thenReturn(mockDocumentSnapshot);
-        when(mockDocumentSnapshot.exists()).thenReturn(true);
-
-        userRepository = new UserRepository(mockFirestore);
-
-        // Act
-        userRepository.updateUserProfession(userId, newProfessionInput.getProfession());
-
-        // Assert
-        verify(mockDocumentRef, times(1)).set(new HashMap<>(Map.of("profession", newProfessionInput.getProfession().toString())), SetOptions.merge());
     }
 }

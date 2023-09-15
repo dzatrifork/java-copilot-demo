@@ -4,7 +4,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.acme.models.*;
+import org.acme.models.AgeInput;
+import org.acme.models.NameInput;
+import org.acme.models.User;
+import org.acme.models.UserInput;
 import org.acme.services.UserService;
 
 @Path("/user")
@@ -40,13 +43,6 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateUserAge(@PathParam("id") String id, AgeInput input) {
         userService.updateUserAge(id, input);
-    }
-
-    @PATCH
-    @Path("{id}/profession")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void updateUserProfession(@PathParam("id") String id, ProfessionInput input) {
-        userService.updateUserProfession(id, input);
     }
 
 }

@@ -25,8 +25,4 @@ public class UserService {
     public void updateUserAge(String id, AgeInput ageInput) {
         userRepository.updateUserAge(id, ageInput.getAge());
     }
-
-    public void updateUserProfession(String id, ProfessionInput professionInput) {
-        userRepository.updateUserProfession(id, professionInput.getProfession());
-    }
 }
