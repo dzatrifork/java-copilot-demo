@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @QuarkusTest
@@ -55,6 +56,36 @@ public class UserRepositoryTest {
         // Assert
         assertEquals("12345", userId);
         verify(mockCollection, times(1)).add(any(User.class));
+    }
+
+    @Test
+    void testCreateUserWithNullName() {
+        // Arrange
+        UserInput userInput = UserInput.builder()
+                .name(null)
+                .age(30)
+                .profession(Profession.ENGINEER)
+                .build();
+
+        userRepository = new UserRepository(mockFirestore);
+
+        // Act & Assert
+        assertThrows(NullPointerException.class, () -> userRepository.createUser(userInput));
+    }
+
+    @Test
+    void testCreateUserWithEmptyName() {
+        // Arrange
+        UserInput userInput = UserInput.builder()
+                .name("")
+                .age(30)
+                .profession(Profession.ENGINEER)
+                .build();
+
+        userRepository = new UserRepository(mockFirestore);
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> userRepository.createUser(userInput));
     }
 
 
@@ -132,7 +163,7 @@ public class UserRepositoryTest {
         userRepository = new UserRepository(mockFirestore);
 
         // Act
-        userRepository.updateUserAge(userId, newAgeInput);
+        userRepository.updateUserAge(userId, newAgeInput.getAge());
 
         // Assert
         verify(mockDocumentRef, times(1)).set(new HashMap<>(Map.of("age", newAgeInput.getAge())), SetOptions.merge());
@@ -157,7 +188,7 @@ public class UserRepositoryTest {
         userRepository = new UserRepository(mockFirestore);
 
         // Act
-        userRepository.updateUserProfession(userId, newProfessionInput);
+        userRepository.updateUserProfession(userId, newProfessionInput.getProfession());
 
         // Assert
         verify(mockDocumentRef, times(1)).set(new HashMap<>(Map.of("profession", newProfessionInput.getProfession().toString())), SetOptions.merge());

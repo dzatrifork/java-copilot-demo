@@ -27,3 +27,21 @@ Service that holds and manages user data.
 - Generate OpenAPI spec
 - Generate Dockerfile
 - Generate NotFoundExceptionMapper
+
+# Presentation
+
+## Steps:
+- Create patch endpoint for professions
+  - Update UserRepository with updateUserProfession
+  - Create Profession enum
+  - Create ProfessionInput with Profession as input value
+  - Update UserService `updateUserProfession(String id, Profession profession)`
+  - Generate endpoint in UserResource
+  - Update UserRepositoryTest
+  - Try and let Copilot write more tests (example testCreateUserWithNullName and testCreateUserWithEmptyName)
+    - Fix Illegal argument exception missing
+  - (OPTIONAL) Create UserServiceTest
+- Use ChatGPT with code interpreter
+  - to refactor ...
+  - to write documentation for ...
+  

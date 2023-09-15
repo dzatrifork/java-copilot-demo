@@ -25,6 +25,11 @@ public class UserRepository {
 
     @SneakyThrows
     public String createUser(UserInput userInput) {
+        // throw IllegalArgumentException if name is empty
+        if (userInput.getName().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+
         User user = User.builder()
                 .name(userInput.getName())
                 .age(userInput.getAge())
