@@ -19,15 +19,6 @@ Service that holds and manages user data.
 - PATCH user/{id}/profession
   - (Make ChatGPT give me an enum of possible professions)
 
-
-## Generation
-
-- Generate tests with Mockito
-- Generate documentation
-- Generate OpenAPI spec
-- Generate Dockerfile
-- Generate NotFoundExceptionMapper
-
 # Presentation
 
 ## Steps:
@@ -35,13 +26,58 @@ Service that holds and manages user data.
   - Update UserRepository with updateUserProfession
   - Create Profession enum
   - Create ProfessionInput with Profession as input value
+  - Update UserInput
+  - update UserRepository.createUser with profession
   - Update UserService `updateUserProfession(String id, Profession profession)`
   - Generate endpoint in UserResource
   - Update UserRepositoryTest
-  - Try and let Copilot write more tests (example testCreateUserWithNullName and testCreateUserWithEmptyName)
+    - Write test for assertUserExists
+    - Try and let Copilot write more tests
+      - testCreateUserWithNullName
+      - testCreateUserWithEmptyName
     - Fix Illegal argument exception missing
   - (OPTIONAL) Create UserServiceTest
 - Use ChatGPT with code interpreter
-  - to refactor ...
-  - to write documentation for ...
+  - to refactoring suggestions for UserService: "Do you have any suggestions for refactoring in this file?"
+  - to write documentation for UserResource: "Please write documentation as markdown for the endpoints defined in this code"
+- Use HuggingChat with web search
+  - Write ContextRequestFilter: "In Java, using the Quarkus framework, give me a ContainerRequestFilter that checks the input for bad words"
+  - Write BadRequestMapper: "In Java give me a BadRequestException ExceptionMapper that translates the exception into a response"
+
+# Curls for testing:
+
+## Create user
+```
+curl --location 'http://localhost:8080/user' \
+--header 'Content-Type: application/json' \
+--data '{
+"name": "Ben",
+"age": 23,
+"profession": "TEACHER"
+}'
+```
+
+## Get user
+```
+curl --location 'http://localhost:8080/user/O6phXT1wP2lCCeH6icG6'
+```
+
+## Patch Name
+
+```
+curl --location --request PATCH 'http://localhost:8080/user/O6phXT1wP2lCCeH6icG6/name' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "David"
+}'
+```
+
+## Patch profession
+```
+curl --location --request PATCH 'http://localhost:8080/user/O6phXT1wP2lCCeH6icG6/profession' \
+--header 'Content-Type: application/json' \
+--data '{
+    "profession": "CHEF"
+}'
+```
   
