@@ -23,23 +23,21 @@ Service that holds and manages user data.
 
 ## Steps:
 - Create patch endpoint for professions
+  - Generate endpoint in UserResource
+  - Update UserService `updateUserProfession(String id, Profession profession)`
   - Update UserRepository with updateUserProfession
-  - Create Profession enum
-  - Create ProfessionInput with Profession as input value
+  - Get more professions in Profession enum using ChatGPT
   - Update UserInput
   - update UserRepository.createUser with profession
-  - Update UserService `updateUserProfession(String id, Profession profession)`
-  - Generate endpoint in UserResource
   - Update UserRepositoryTest
     - Write test for assertUserExists
     - Try and let Copilot write more tests
       - testCreateUserWithNullName
       - testCreateUserWithEmptyName
-    - Fix Illegal argument exception missing
-  - (OPTIONAL) Create UserServiceTest
+        - Fix Illegal argument exception missing
 - Use ChatGPT with code interpreter
-  - to refactoring suggestions for UserService: "Do you have any suggestions for refactoring in this file?"
   - to write documentation for UserResource: "Please write documentation as markdown for the endpoints defined in this code"
+  - to refactoring suggestions for UserService: "Do you have any suggestions for refactoring in this file?"
 - Use HuggingChat with web search
   - Write ContextRequestFilter: "In Java, using the Quarkus framework, give me a ContainerRequestFilter that checks the input for bad words"
   - Write BadRequestMapper: "In Java give me a BadRequestException ExceptionMapper that translates the exception into a response"
