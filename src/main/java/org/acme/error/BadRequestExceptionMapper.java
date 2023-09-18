@@ -1,4 +1,4 @@
-package org.acme.utils;
+package org.acme.error;
 
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.core.Response;

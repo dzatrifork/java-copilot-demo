@@ -24,10 +24,12 @@ Service that holds and manages user data.
 ## Steps:
 - Create patch endpoint for professions
   - Update UserRepository with updateUserProfession
-  - Create Profession enum
+  - Create Profession enum (Generate enums from ChatGPT)
+    - Profession fromString(String profession)
+    - Create @JsonValue String toString()
   - Create ProfessionInput with Profession as input value
-  - Update UserInput
-  - update UserRepository.createUser with profession
+  - Update UserInput with `Profession profession`
+  - update `UserRepository.createUser` with profession
   - Update UserService `updateUserProfession(String id, Profession profession)`
   - Generate endpoint in UserResource
   - Update UserRepositoryTest
