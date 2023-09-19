@@ -2,7 +2,10 @@ package org.acme.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.acme.models.*;
+import org.acme.models.AgeInput;
+import org.acme.models.NameInput;
+import org.acme.models.User;
+import org.acme.models.UserInput;
 
 @ApplicationScoped
 public class UserService {

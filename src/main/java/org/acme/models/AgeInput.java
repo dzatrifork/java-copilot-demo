@@ -10,6 +10,5 @@ import lombok.Value;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class AgeInput {
-
-        private int age;
+        int age;
 }

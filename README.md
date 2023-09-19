@@ -7,8 +7,7 @@ Service that holds and manages user data.
 - Quarkus
 - Microservice
 - Java
-- Firebase
-- Docker
+- Firebase (Firestore)
 
 ## Endpoints
 
@@ -17,16 +16,16 @@ Service that holds and manages user data.
 - PATCH user/{id}/name
 - PATCH user/{id}/age
 - PATCH user/{id}/profession
-  - (Make ChatGPT give me an enum of possible professions)
 
 # Presentation
 
 ## Steps:
 - Create patch endpoint for professions
   - Generate endpoint in UserResource
-  - Update UserService `updateUserProfession(String id, Profession profession)`
+  - Update UserService
   - Update UserRepository with updateUserProfession
-  - Get more professions in Profession enum using ChatGPT
+  - Get more professions in Profession enum using ChatGPT: "Extend the following enum with more professions: <code>"
+    - https://chat.openai.com/share/cfb10904-f313-4931-a144-0b3bf5dd6428
   - Update UserInput
   - update UserRepository.createUser with profession
   - Update UserRepositoryTest
@@ -37,10 +36,16 @@ Service that holds and manages user data.
         - Fix Illegal argument exception missing
 - Use ChatGPT with code interpreter
   - to write documentation for UserResource: "Please write documentation as markdown for the endpoints defined in this code"
+    - https://chat.openai.com/share/9201155d-d5c9-4ec2-8c33-01ee25ed13a6
   - to refactoring suggestions for UserService: "Do you have any suggestions for refactoring in this file?"
+    - https://chat.openai.com/share/5f9de0e4-0a35-4947-afd7-371ec51d447f
+  - Give recommendations for tests in UserServiceTest: "Do you have any recommendations for tests in this file?"
+    - https://chat.openai.com/share/2b48cfb7-896e-4060-b8af-9bfe2f33a83a
 - Use HuggingChat with web search
   - Write ContextRequestFilter: "In Java, using the Quarkus framework, give me a ContainerRequestFilter that checks the input for bad words"
+    - https://huggingface.co/chat/conversation/65041eb589b510123b87361f
   - Write BadRequestMapper: "In Java give me a BadRequestException ExceptionMapper that translates the exception into a response"
+    - https://huggingface.co/chat/conversation/650422f447ef1e68713955e1
 
 # Curls for testing:
 

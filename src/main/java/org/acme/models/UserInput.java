@@ -6,7 +6,6 @@ import lombok.Value;
 @Value
 @Builder
 public class UserInput {
-
-        private String name;
-        private int age;
+        String name;
+        int age;
 }
